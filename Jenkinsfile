@@ -95,9 +95,6 @@ pipeline {
     }
 
     stage('Publish Docker image') {
-      when {
-        branch 'main'
-      }
       steps {
         withCredentials([usernamePassword(credentialsId: env.DOCKERHUB_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
           sh '''
