@@ -53,7 +53,33 @@ describe('TaskList', () => {
 		expect(screen.getByText('Première tâche')).toBeInTheDocument();
 		expect(screen.getByText('Deuxième tâche')).toBeInTheDocument();
 		expect(screen.getByText('2 tâches')).toBeInTheDocument();
+		expect(screen.getByText('1 terminée')).toBeInTheDocument();
 	});
 
-	// ... TODO: Add more tests
+	it('renders empty and error states', () => {
+		const { rerender } = render(
+			<TaskList
+				tasks={[]}
+				loading={false}
+				error={null}
+				onToggle={vi.fn()}
+				onDelete={vi.fn()}
+				onEdit={vi.fn()}
+			/>
+		);
+		expect(screen.getByTestId('empty')).toBeInTheDocument();
+
+		rerender(
+			<TaskList
+				tasks={[]}
+				loading={false}
+				error="échec"
+				onToggle={vi.fn()}
+				onDelete={vi.fn()}
+				onEdit={vi.fn()}
+			/>
+		);
+		expect(screen.getByTestId('error')).toBeInTheDocument();
+		expect(screen.getByText('Erreur : échec')).toBeInTheDocument();
+	});
 });
